@@ -1,4 +1,6 @@
+//import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kicks/screens/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -114,7 +116,10 @@ class _LoginState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Not yet register?'),
-                  TextButton(onPressed: (){}, child: Text('Sign Up'))
+                  TextButton(onPressed: (){
+                   Navigator.push(context, MaterialPageRoute (builder: (context)=> SignupScreen()));
+
+                  }, child: Text('Sign Up'))
                 ],
                )
 
