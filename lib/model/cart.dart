@@ -7,6 +7,13 @@ import 'package:kicks/model/product.dart';
 class CartModel extends ChangeNotifier{
   final List<CartItem>_items=[];
   UnmodifiableListView<CartItem>get items=>UnmodifiableListView(_items);
+  double getTotalCost(){
+    var total=0.0;
+    for(var item in _items){
+      total += item.itemTotal;
+    }
+    return total;
+  }
 
   CartItem? findItem(Product product){
     for (var item in _items){

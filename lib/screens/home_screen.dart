@@ -33,7 +33,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_selectedTab]),
+        title: Column(
+          children: [
+            Text(_titles[_selectedTab]),
+            Row(
+              children: [
+                const Spacer(),
+                Consumer<CartModel>(
+                  builder: (context, cart, child) {
+                    return Text(
+                      'KES ${cart.getTotalCost()}',
+                      style: const TextStyle(fontSize: 12),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       body: IndexedStack(
         index: _selectedTab,
