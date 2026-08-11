@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kicks/model/cart.dart';
 import 'package:kicks/model/product.dart';
 import 'package:kicks/screens/product_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,12 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _tabs = const [
     _HomeTab(),
+    _CartTab(),
     _OrdersTab(),
     _ProfileTab(),
   ];
 
   final List<String> _titles = const [
     "Home",
+    'Cart',
     "Orders",
     "Profile",
   ];
@@ -35,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: _tabs,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedTab,
         onTap: (index) {
           setState(() {
@@ -47,13 +52,20 @@ class _HomeScreenState extends State<HomeScreen> {
             activeIcon: Icon(Icons.home),
             label: "Home",
           ),
+            BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            activeIcon: Icon(Icons.home),
+            label: "Cart",
+          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_outlined),
             activeIcon: Icon(Icons.shopping_bag),
-            label: "Orders",
+            label: "Order",
           ),
+
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.person_outlined),
             activeIcon: Icon(Icons.person),
             label: "Profile",
           ),
@@ -78,6 +90,34 @@ class _HomeTab extends StatelessWidget {
   }
 }
 
+// the cart tab
+class _CartTab extends StatelessWidget{
+  const _CartTab();
+  
+  @override
+  Widget build(BuildContext context) {
+   return Consumer<CartModel>(
+    builder:(context,cart,child){
+      if(cart.items.isEmpty){
+       return Center(child: Text('Your cart is empty'));
+      }
+      return ListView.builder(
+        itemCount: cart.items.length,
+        itemBuilder: (context, index){
+          final item=cart.items[index];
+          return ProductCard(product:item);
+        }
+      );
+
+
+    });
+   
+  }
+}
+
+
+
+//the orders tab
 class _OrdersTab extends StatelessWidget {
   const _OrdersTab();
 

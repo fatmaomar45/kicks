@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:kicks/model/cart.dart';
 import 'package:kicks/model/product.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;
@@ -34,7 +36,20 @@ class _ProductCardState extends State<ProductCard> {
               Text(widget.product.name),
               Text(widget.product.description),
               
-              Text('KES ${widget.product.price}'),
+              Row(children: [
+                Text('KES ${widget.product.price}'),
+
+                Spacer(flex: 1,),
+
+                IconButton(
+                onPressed: (){Provider.of<CartModel>(
+                  context,
+                  listen: false,
+                ).addItem(widget.product);
+                },
+                icon: Icon(Icons.shopping_cart_outlined,size:20),)
+              ],)
+              
             ],
           ))
         ],
