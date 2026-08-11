@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kicks/model/cart.dart';
 import 'package:kicks/model/product.dart';
+import 'package:kicks/screens/cart_card.dart';
 import 'package:kicks/screens/product_card.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +106,13 @@ class _CartTab extends StatelessWidget{
         itemCount: cart.items.length,
         itemBuilder: (context, index){
           final item=cart.items[index];
-          return ProductCard(product:item);
+          return CartCard(
+            cartItem: item,
+            increment: () {cart.increment(item.product);},
+            decrement: () {cart.decrement(item.product);
+              // context.read<CartModel>().removeItem(item.product);
+            },
+          );
         }
       );
 
